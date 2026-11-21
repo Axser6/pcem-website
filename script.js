@@ -118,25 +118,203 @@
   window.addEventListener('resize', onRevealScroll);
   reveal();
 
-  // Projects carousel
-  var track = document.getElementById('work-track');
-  var cards = track.querySelectorAll('.pcard');
-  var count = document.getElementById('work-count');
-  var prev = document.getElementById('work-prev');
-  var next = document.getElementById('work-next');
-  function pad(n) { return (n < 10 ? '0' : '') + n; }
-  function step() { return cards[0].getBoundingClientRect().width + 20; }
-  function update() {
-    var i = Math.round(track.scrollLeft / step());
-    count.textContent = '[ ' + pad(Math.min(i + 1, cards.length)) + '/' + pad(cards.length) + ' ]';
-    prev.disabled = track.scrollLeft < 5;
-    next.disabled = track.scrollLeft + track.clientWidth >= track.scrollWidth - 5;
-  }
-  prev.addEventListener('click', function () { track.scrollBy({ left: -step(), behavior: 'smooth' }); });
-  next.addEventListener('click', function () { track.scrollBy({ left: step(), behavior: 'smooth' }); });
-  track.addEventListener('scroll', update, { passive: true });
-  window.addEventListener('resize', update);
-  update();
+  // Project carousel: endless 3D ring of cards (transform-only, rAF while moving)
+  (function () {
+    var root_ = document.querySelector('.pc');
+    if (!root_) return;
+    var stage = root_.querySelector('.pc-stage');
+    var cards = Array.prototype.slice.call(stage.querySelectorAll('.pc-card'));
+    var n = cards.length;
+    if (!n) return;
+    var barsWrap = root_.querySelector('.pc-bars');
+    var live = root_.querySelector('.pc-live');
+    var playBtn = root_.querySelector('.pc-play');
+    var section = root_.closest('section') || root_;
+    var AUTOPLAY = parseInt(root_.getAttribute('data-autoplay'), 10) || 4500;
+    var titles = cards.map(function (c) { var t = c.querySelector('h3'); return t ? t.textContent.trim() : ''; });
+
+    var target = 0, current = 0, raf = 0, last = 0;
+    var cardW = 0, step = 0;
+    var mod = function (a, m) { return ((a % m) + m) % m; };
+    var ringDist = function (x) { return mod(x + n / 2, n) - n / 2; };
+    var clamp = function (v, a, b) { return v < a ? a : v > b ? b : v; };
+
+    // Pagination bars
+    var bars = titles.map(function (t, i) {
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'pc-bar';
+      b.setAttribute('aria-label', 'Show ' + t);
+      b.innerHTML = '<span class="pc-bar-track"><span class="pc-bar-fill"></span></span>';
+      b.addEventListener('click', function () { goTo(i, true); });
+      barsWrap.appendChild(b);
+      return b.querySelector('.pc-bar-fill');
+    });
+    var barBtns = Array.prototype.slice.call(barsWrap.children);
+
+    function measure() {
+      cardW = cards[0].offsetWidth || 1;
+      step = 0.9 * cardW;
+    }
+
+    var activeIdx = -1;
+    function render() {
+      var half = n / 2;
+      for (var i = 0; i < n; i++) {
+        var d = ringDist(i - current), a = Math.abs(d), m = Math.min(a, 1);
+        var op = a <= 1 ? 1 - 0.42 * a : (half > 1 ? 0.58 * clamp(1 - (a - 1) / (half - 1), 0, 1) : 0);
+        var s = cards[i].style;
+        s.transform = 'translate(-50%,-50%) translate3d(' + (d * step).toFixed(2) + 'px,0,0) scale(' + (1 - 0.16 * m).toFixed(4) + ')';
+        s.filter = m > 0.001 ? 'blur(' + (5 * m).toFixed(2) + 'px)' : 'none';
+        s.opacity = op.toFixed(3);
+        s.zIndex = String(100 - Math.round(a * 10));
+        s.pointerEvents = op < 0.05 ? 'none' : '';
+        bars[i].style.transform = 'scaleX(' + clamp(1 - Math.abs(ringDist(i - current)), 0, 1).toFixed(4) + ')';
+      }
+      var idx = mod(Math.round(current), n);
+      if (idx !== activeIdx) {
+        activeIdx = idx;
+        cards.forEach(function (c, i) {
+          var on = i === idx;
+          c.classList.toggle('is-active', on);
+          c.querySelectorAll('a').forEach(function (l) { l.tabIndex = on ? 0 : -1; });
+        });
+        barBtns.forEach(function (b, i) { if (i === idx) b.setAttribute('aria-current', 'true'); else b.removeAttribute('aria-current'); });
+      }
+    }
+
+    function tick(now) {
+      raf = 0;
+      var dt = Math.min(0.1, (now - last) / 1000); last = now;
+      if (dragging) { current = target; }
+      else {
+        current += (target - current) * (1 - Math.exp(-9 * dt));
+        if (Math.abs(target - current) < 0.0004) current = target;
+      }
+      render();
+      if (current !== target || dragging) raf = requestAnimationFrame(tick);
+    }
+    function kick() {
+      if (reduceMotion) { current = target; render(); return; }
+      if (!raf) { last = performance.now(); raf = requestAnimationFrame(tick); }
+    }
+
+    function announce(user) {
+      live.setAttribute('aria-live', user ? 'polite' : 'off');
+      var idx = mod(Math.round(target), n);
+      live.textContent = 'Showing ' + (idx + 1) + ' of ' + n + ': ' + titles[idx];
+    }
+    function setTarget(t, user) { target = t; kick(); announce(user); if (user) restartTimer(); }
+    function move(dir, user) { setTarget(Math.round(target) + dir, user); }
+    function goTo(i, user) {
+      var base = Math.round(target);
+      setTarget(base + ringDist(i - mod(base, n)), user);
+    }
+
+    root_.querySelector('.pc-prev').addEventListener('click', function () { move(-1, true); });
+    root_.querySelector('.pc-next').addEventListener('click', function () { move(1, true); });
+
+    // Keyboard on the stage
+    stage.addEventListener('keydown', function (e) {
+      if (e.key === 'ArrowLeft') { e.preventDefault(); move(-1, true); }
+      else if (e.key === 'ArrowRight') { e.preventDefault(); move(1, true); }
+    });
+    // Focusing a card's link centres that card
+    cards.forEach(function (c, i) {
+      c.addEventListener('focusin', function () { if (mod(Math.round(target), n) !== i) goTo(i, true); });
+    });
+
+    // Drag / swipe (horizontal only; vertical intent is left to the page)
+    var dragging = false, ptr = null, suppressClick = false;
+    stage.addEventListener('pointerdown', function (e) {
+      if (e.button !== 0 && e.pointerType === 'mouse') return;
+      ptr = { id: e.pointerId, x: e.clientX, y: e.clientY, t0: target, axis: null, samples: [{ x: e.clientX, t: e.timeStamp }], touch: e.pointerType !== 'mouse' };
+      if (ptr.touch) { touching = true; updatePlay(); }
+    });
+    stage.addEventListener('pointermove', function (e) {
+      if (!ptr || e.pointerId !== ptr.id) return;
+      var dx = e.clientX - ptr.x, dy = e.clientY - ptr.y;
+      if (!ptr.axis) {
+        if (Math.hypot(dx, dy) < 6) return;
+        ptr.axis = Math.abs(dx) > Math.abs(dy) ? 'x' : 'y';
+        if (ptr.axis === 'y') { endPointer(); return; }
+        dragging = true;
+        stage.classList.add('is-dragging');
+        try { stage.setPointerCapture(e.pointerId); } catch (err) {}
+      }
+      e.preventDefault();
+      ptr.samples.push({ x: e.clientX, t: e.timeStamp });
+      if (ptr.samples.length > 6) ptr.samples.shift();
+      target = ptr.t0 - dx / step;
+      kick();
+    });
+    function release(e) {
+      if (!ptr || e.pointerId !== ptr.id) return;
+      if (ptr.axis === 'x') {
+        var dx = e.clientX - ptr.x;
+        var s = ptr.samples, a = s[0], b = s[s.length - 1];
+        var v = b.t > a.t ? (b.x - a.x) / (b.t - a.t) : 0;
+        var base = Math.round(ptr.t0);
+        if (Math.abs(v) > 0.35 || Math.abs(dx) > 0.2 * cardW) {
+          var dir = (Math.abs(v) > 0.35 ? v : dx) < 0 ? 1 : -1;
+          var t = Math.round(ptr.t0 - dx / step);
+          if (t === base) t = base + dir;
+          target = t;
+        } else target = base;
+        dragging = false;
+        stage.classList.remove('is-dragging');
+        suppressClick = true;
+        setTimeout(function () { suppressClick = false; }, 0);
+        kick(); announce(true); restartTimer();
+      }
+      endPointer();
+    }
+    function endPointer() {
+      if (ptr && ptr.touch) { touching = false; updatePlay(); }
+      ptr = null;
+      if (dragging) { dragging = false; stage.classList.remove('is-dragging'); target = Math.round(target); kick(); }
+    }
+    stage.addEventListener('pointerup', release);
+    stage.addEventListener('pointercancel', function (e) { if (ptr && e.pointerId === ptr.id) endPointer(); });
+    // After a drag, swallow the click; clicking a side card centres it instead of following its link
+    stage.addEventListener('click', function (e) {
+      if (suppressClick) { e.preventDefault(); e.stopPropagation(); suppressClick = false; return; }
+      var card = e.target.closest('.pc-card');
+      if (!card) return;
+      var i = cards.indexOf(card);
+      if (i !== mod(Math.round(target), n)) { e.preventDefault(); e.stopPropagation(); goTo(i, true); }
+    }, true);
+
+    // Autoplay
+    var hovered = false, focused = false, touching = false, visible = false, userPaused = false, timer = 0;
+    function canPlay() { return !reduceMotion && !userPaused && !hovered && !focused && !touching && visible && !document.hidden; }
+    function restartTimer() {
+      clearTimeout(timer);
+      if (canPlay()) timer = setTimeout(function () { move(1, false); restartTimer(); }, AUTOPLAY);
+    }
+    function updatePlay() { restartTimer(); }
+    root_.addEventListener('mouseenter', function () { hovered = true; updatePlay(); });
+    root_.addEventListener('mouseleave', function () { hovered = false; updatePlay(); });
+    root_.addEventListener('focusin', function () { focused = true; updatePlay(); });
+    root_.addEventListener('focusout', function (e) { if (!root_.contains(e.relatedTarget)) { focused = false; updatePlay(); } });
+    document.addEventListener('visibilitychange', updatePlay);
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function (es) { visible = es[0].intersectionRatio >= 0.35; updatePlay(); },
+        { threshold: [0, 0.35, 0.6, 1] }).observe(section);
+    } else visible = true;
+    playBtn.addEventListener('click', function () {
+      userPaused = !userPaused;
+      playBtn.classList.toggle('is-paused', userPaused);
+      playBtn.setAttribute('aria-label', userPaused ? 'Play automatic rotation' : 'Pause automatic rotation');
+      updatePlay();
+    });
+    if (reduceMotion) { playBtn.hidden = true; }
+
+    window.addEventListener('resize', function () { measure(); render(); });
+    measure();
+    render();
+    announce(false);
+  })();
 
   // Quote dialog
   var dlg = document.getElementById('quote');

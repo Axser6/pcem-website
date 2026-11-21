@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@125,600;125,700;125,800;125,900&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.css">
-  <link rel="stylesheet" href="styles.css?v=2026112103">
+  <link rel="stylesheet" href="styles.css?v=2026112109">
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
   <link rel="icon" href="assets/icon-192.png" type="image/png" sizes="192x192">
   <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
@@ -132,8 +132,8 @@
           <p class="about-lede">Since 2009 we have prepared the ground for industrial parks, highways and railways, with our own fleet and our own people.</p>
         </div>
         <div class="about-photos reveal">
-          <img width="1400" height="788" src="assets/img/projects/eroyce-fleet.jpg?v=2" alt="PCEM excavators loading tipper trucks at the Eroyce Motors site" loading="lazy">
-          <img width="1200" height="1200" src="assets/img/projects/vijayawada.jpg?v=2" alt="Railway bridge built with PCEM support in Vijayawada" loading="lazy">
+          <span class="frame"><img width="1400" height="788" src="assets/img/projects/eroyce-fleet.jpg?v=2" alt="PCEM excavators loading tipper trucks at the Eroyce Motors site" loading="lazy"></span>
+          <span class="frame"><img class="fit-top" width="1200" height="1200" src="assets/img/projects/vijayawada.jpg?v=2" alt="Railway bridge built with PCEM support in Vijayawada" loading="lazy"></span>
         </div>
       </div>
     </section>
@@ -167,7 +167,7 @@
             <p>Bulk excavation, cutting, filling and hard rock blasting.</p>
           </article>
           <article class="svc reveal">
-            <div class="svc-img"><img width="1400" height="1050" src="assets/img/projects/eroyce.jpg?v=2" alt="Backhoe loaders levelling land at the Eroyce Motors site" loading="lazy"></div>
+            <div class="svc-img"><img class="fit-upper" width="1400" height="1050" src="assets/img/projects/eroyce.jpg?v=2" alt="Backhoe loaders levelling land at the Eroyce Motors site" loading="lazy"></div>
             <span class="mono-label">02</span>
             <h3>Site development</h3>
             <p>EPC layout development for industrial parks and plots.</p>
@@ -179,7 +179,7 @@
             <p>Embankment filling, compaction and railway civil works.</p>
           </article>
           <article class="svc reveal">
-            <div class="svc-img"><img width="1400" height="902" src="assets/img/projects/sehgal.jpg?v=2" alt="Foundation reinforcement at the Sehgal Foundation site" loading="lazy"></div>
+            <div class="svc-img"><img class="fit-upper" width="1400" height="902" src="assets/img/projects/sehgal.jpg?v=2" alt="Foundation reinforcement at the Sehgal Foundation site" loading="lazy"></div>
             <span class="mono-label">04</span>
             <h3>Civil construction</h3>
             <p>Foundations, concrete works and supporting structures.</p>
@@ -196,7 +196,7 @@
           <span class="rule-inline"></span>
         </div>
         <div class="stats-grid reveal">
-          <img width="1400" height="788" src="assets/img/projects/mother-dairy.jpg?v=2" alt="Excavators loading trucks at the Mother Dairy project, Kuppam" loading="lazy">
+          <span class="frame"><img width="1400" height="788" src="assets/img/projects/mother-dairy.jpg?v=2" alt="Excavators loading trucks at the Mother Dairy project, Kuppam" loading="lazy"></span>
           <div class="stats-side">
             <h2 class="h-xl">Of moving<br>earth</h2>
             <p>From railway lines in Chhattisgarh to industrial parks in Kuppam, every project is planned with care and delivered on time.</p>
@@ -212,100 +212,132 @@
       </div>
     </section>
 
-    <!-- ===== Projects ===== -->
-    <section class="work" id="projects">
-      <img width="1400" height="788" class="work-bg" src="assets/img/projects/eroyce-fleet.jpg?v=2" alt="">
+    <!-- ===== Projects: endless 3D card carousel (assets: script.js "Project carousel") ===== -->
+    <section class="work" id="projects" aria-roledescription="carousel" aria-label="Our work">
+      <img class="work-bg" width="1400" height="788" src="assets/img/projects/eroyce-fleet.jpg?v=2" alt="">
       <div class="wrap work-head reveal">
         <h2 class="h-xl light">Our work</h2>
-        <div class="work-controls">
-          <span class="mono-label" id="work-count">[ 01/09 ]</span>
-          <button class="arrow" id="work-prev" aria-label="Previous project">←</button>
-          <button class="arrow" id="work-next" aria-label="Next project">→</button>
-        </div>
+        <p class="work-sub">Industrial parks, dairies, highways and railways across South India.</p>
       </div>
 
-      <div class="work-track" id="work-track">
-        <article class="pcard">
-          <div class="pcard-img"><img width="1400" height="788" src="assets/img/projects/aleap.jpg?v=2" alt="ALEAP Industrial Park site" loading="lazy"><span class="pcard-tag">Industrial</span></div>
-          <div class="pcard-body">
-            <p class="pcard-meta"><span>Kuppam, AP</span><span>2026 – ongoing</span></p>
-            <h3>ALEAP Industrial Park</h3>
-            <ul class="tags"><li>EPC</li><li>Layout development</li></ul>
-            <p>Complete layout development of the industrial park under an EPC contract.</p>
-          </div>
-        </article>
-        <article class="pcard">
-          <div class="pcard-img"><img width="1400" height="788" src="assets/img/projects/shreeja.jpg?v=2" alt="Shreeja Dairy site" loading="lazy"><span class="pcard-tag">Food processing</span></div>
-          <div class="pcard-body">
-            <p class="pcard-meta"><span>Kuppam, AP</span><span>2026 – ongoing</span></p>
-            <h3>Shreeja Dairy</h3>
-            <ul class="tags"><li>Excavation</li><li>Earthworks</li><li>Foundations</li></ul>
-            <p>Bulk mass excavation, earthworks and foundations for the new dairy plant.</p>
-          </div>
-        </article>
-        <article class="pcard">
-          <div class="pcard-img"><img width="1400" height="788" src="assets/img/projects/mother-dairy.jpg?v=2" alt="Mother Dairy site" loading="lazy"><span class="pcard-tag">Food processing</span></div>
-          <div class="pcard-body">
-            <p class="pcard-meta"><span>Kuppam, AP</span><span>2025 – 2026</span></p>
-            <h3>Mother Dairy</h3>
-            <ul class="tags"><li>Excavation</li><li>Foundations</li><li>Rock blasting</li></ul>
-            <p>Bulk mass excavation, earthworks and foundations, including hard rock excavation and controlled blasting.</p>
-          </div>
-        </article>
-        <article class="pcard">
-          <div class="pcard-img"><img width="1400" height="1050" src="assets/img/projects/eroyce.jpg?v=2" alt="Eroyce Motors site" loading="lazy"><span class="pcard-tag">Industrial</span></div>
-          <div class="pcard-body">
-            <p class="pcard-meta"><span>Kuppam, AP</span><span>2025 – 2026</span></p>
-            <h3>Eroyce Motors India</h3>
-            <ul class="tags"><li>Earth filling</li><li>Excavation</li><li>Hard rock</li></ul>
-            <p>Industrial site development with earth filling, bulk excavation and hard rock excavation.</p>
-          </div>
-        </article>
-        <article class="pcard">
-          <div class="pcard-img"><img width="1400" height="902" src="assets/img/projects/sehgal.jpg?v=2" alt="Sehgal Foundation site" loading="lazy"><span class="pcard-tag">Industrial</span></div>
-          <div class="pcard-body">
-            <p class="pcard-meta"><span>Hyderabad, TS</span><span>2024 – 2025</span></p>
-            <h3>Sehgal Foundation</h3>
-            <ul class="tags"><li>Excavation</li><li>Civil construction</li></ul>
-            <p>Industrial development, excavation and civil construction.</p>
-          </div>
-        </article>
-        <article class="pcard">
-          <div class="pcard-img"><img width="1600" height="900" src="assets/img/hero-poster.jpg" alt="Excavator on an earthworks site" loading="lazy"><span class="pcard-tag">Highways</span></div>
-          <div class="pcard-body">
-            <p class="pcard-meta"><span>Karnataka</span><span>2022 – 2024</span></p>
-            <h3>Bengaluru–Chennai Expressway</h3>
-            <ul class="tags"><li>Earth filling</li><li>NE-7</li></ul>
-            <p>Embankment earth filling for the expressway corridor.</p>
-          </div>
-        </article>
-        <article class="pcard">
-          <div class="pcard-img"><img width="1400" height="788" src="assets/img/projects/asvi.jpg?v=2" alt="ASVI Golden Feet residential layout" loading="lazy"><span class="pcard-tag">Real estate</span></div>
-          <div class="pcard-body">
-            <p class="pcard-meta"><span>Tirupati · Bengaluru</span><span>2020 – 2024</span></p>
-            <h3>ASVI Golden Feet &amp; Roman Orchard</h3>
-            <ul class="tags"><li>Layout development</li></ul>
-            <p>Residential layout development across two projects.</p>
-          </div>
-        </article>
-        <article class="pcard">
-          <div class="pcard-img"><img width="1200" height="1200" src="assets/img/projects/vijayawada.jpg?v=2" alt="Vijayawada railway bridge" loading="lazy"><span class="pcard-tag">Railways</span></div>
-          <div class="pcard-body">
-            <p class="pcard-meta"><span>Vijayawada, AP</span><span>2019 – 2021</span></p>
-            <h3>Vijayawada Railway Bridge</h3>
-            <ul class="tags"><li>Bridge works</li></ul>
-            <p>Bridge construction support works.</p>
-          </div>
-        </article>
-        <article class="pcard">
-          <div class="pcard-img"><img width="1400" height="788" src="assets/img/projects/chhattisgarh.jpg?v=2" alt="Railway works in Chhattisgarh" loading="lazy"><span class="pcard-tag">Railways</span></div>
-          <div class="pcard-body">
-            <p class="pcard-meta"><span>Chhattisgarh</span><span>2010 – 2020</span></p>
-            <h3>Railway Infrastructure</h3>
-            <ul class="tags"><li>Excavation</li><li>Concrete products</li><li>Bridges</li></ul>
-            <p>A decade of bulk excavation, precast concrete products and railway bridge construction.</p>
-          </div>
-        </article>
+      <div class="pc" data-autoplay="4500">
+        <ul class="pc-stage" tabindex="0" aria-label="Projects. Use the left and right arrow keys to browse.">
+          <li class="pc-card" aria-roledescription="slide" aria-label="1 of 9: ALEAP Industrial Park">
+            <img src="assets/img/projects/aleap.jpg?v=2" alt="Excavator breaking rock at ALEAP Industrial Park" width="1400" height="788" loading="lazy" draggable="false">
+            <div class="pc-shade" aria-hidden="true"></div>
+            <div class="pc-body">
+              <div class="pc-text">
+                <p class="pc-cat"><span>Industrial</span> Kuppam, AP · 2026 – ongoing</p>
+                <h3>ALEAP Industrial Park</h3>
+                <p class="pc-desc">Complete layout development of the industrial park under an EPC contract.</p>
+              </div>
+              <a class="pc-link" href="#contact" aria-label="Discuss a project like ALEAP Industrial Park"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+            </div>
+          </li>
+          <li class="pc-card" aria-roledescription="slide" aria-label="2 of 9: Shreeja Dairy">
+            <img src="assets/img/projects/shreeja.jpg?v=2" alt="Excavators loading tippers at the Shreeja Dairy site" width="1400" height="788" loading="lazy" draggable="false">
+            <div class="pc-shade" aria-hidden="true"></div>
+            <div class="pc-body">
+              <div class="pc-text">
+                <p class="pc-cat"><span>Food processing</span> Kuppam, AP · 2026 – ongoing</p>
+                <h3>Shreeja Dairy</h3>
+                <p class="pc-desc">Bulk mass excavation, earthworks and foundations for the new dairy plant.</p>
+              </div>
+              <a class="pc-link" href="#contact" aria-label="Discuss a project like Shreeja Dairy"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+            </div>
+          </li>
+          <li class="pc-card" aria-roledescription="slide" aria-label="3 of 9: Mother Dairy">
+            <img src="assets/img/projects/mother-dairy.jpg?v=2" alt="Excavators loading trucks at the Mother Dairy project" width="1400" height="788" loading="lazy" draggable="false">
+            <div class="pc-shade" aria-hidden="true"></div>
+            <div class="pc-body">
+              <div class="pc-text">
+                <p class="pc-cat"><span>Food processing</span> Kuppam, AP · 2025 – 2026</p>
+                <h3>Mother Dairy</h3>
+                <p class="pc-desc">Bulk excavation, earthworks and foundations, including hard rock excavation and controlled blasting.</p>
+              </div>
+              <a class="pc-link" href="#contact" aria-label="Discuss a project like Mother Dairy"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+            </div>
+          </li>
+          <li class="pc-card" aria-roledescription="slide" aria-label="4 of 9: Eroyce Motors India">
+            <img class="fit-upper" src="assets/img/projects/eroyce.jpg?v=2" alt="Backhoe loaders levelling land at the Eroyce Motors site" width="1400" height="1050" loading="lazy" draggable="false">
+            <div class="pc-shade" aria-hidden="true"></div>
+            <div class="pc-body">
+              <div class="pc-text">
+                <p class="pc-cat"><span>Industrial</span> Kuppam, AP · 2025 – 2026</p>
+                <h3>Eroyce Motors India</h3>
+                <p class="pc-desc">Industrial site development with earth filling, bulk excavation and hard rock excavation.</p>
+              </div>
+              <a class="pc-link" href="#contact" aria-label="Discuss a project like Eroyce Motors India"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+            </div>
+          </li>
+          <li class="pc-card" aria-roledescription="slide" aria-label="5 of 9: Sehgal Foundation">
+            <img class="fit-upper" src="assets/img/projects/sehgal.jpg?v=2" alt="Foundation reinforcement at the Sehgal Foundation site" width="1400" height="902" loading="lazy" draggable="false">
+            <div class="pc-shade" aria-hidden="true"></div>
+            <div class="pc-body">
+              <div class="pc-text">
+                <p class="pc-cat"><span>Industrial</span> Hyderabad, TS · 2024 – 2025</p>
+                <h3>Sehgal Foundation</h3>
+                <p class="pc-desc">Industrial development, excavation and civil construction.</p>
+              </div>
+              <a class="pc-link" href="#contact" aria-label="Discuss a project like Sehgal Foundation"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+            </div>
+          </li>
+          <li class="pc-card" aria-roledescription="slide" aria-label="6 of 9: Bengaluru–Chennai Expressway">
+            <img class="pos-center" src="assets/img/hero-poster.jpg" alt="Excavator on a red-soil earthworks site" width="1600" height="900" loading="lazy" draggable="false">
+            <div class="pc-shade" aria-hidden="true"></div>
+            <div class="pc-body">
+              <div class="pc-text">
+                <p class="pc-cat"><span>Highways</span> Karnataka · 2022 – 2024</p>
+                <h3>Bengaluru–Chennai Expressway</h3>
+                <p class="pc-desc">Embankment earth filling for the NE-7 expressway corridor.</p>
+              </div>
+              <a class="pc-link" href="#contact" aria-label="Discuss a project like Bengaluru–Chennai Expressway"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+            </div>
+          </li>
+          <li class="pc-card" aria-roledescription="slide" aria-label="7 of 9: ASVI Golden Feet &amp; Roman Orchard">
+            <img src="assets/img/projects/asvi.jpg?v=2" alt="Residential villas at ASVI Golden Feet" width="1400" height="788" loading="lazy" draggable="false">
+            <div class="pc-shade" aria-hidden="true"></div>
+            <div class="pc-body">
+              <div class="pc-text">
+                <p class="pc-cat"><span>Real estate</span> Tirupati · Bengaluru · 2020 – 2024</p>
+                <h3>ASVI Golden Feet &amp; Roman Orchard</h3>
+                <p class="pc-desc">Residential layout development across two projects.</p>
+              </div>
+              <a class="pc-link" href="#contact" aria-label="Discuss a project like ASVI Golden Feet &amp; Roman Orchard"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+            </div>
+          </li>
+          <li class="pc-card" aria-roledescription="slide" aria-label="8 of 9: Vijayawada Railway Bridge">
+            <img class="fit-top" src="assets/img/projects/vijayawada.jpg?v=2" alt="Railway foot-over bridge in Vijayawada" width="1200" height="1200" loading="lazy" draggable="false">
+            <div class="pc-shade" aria-hidden="true"></div>
+            <div class="pc-body">
+              <div class="pc-text">
+                <p class="pc-cat"><span>Railways</span> Vijayawada, AP · 2019 – 2021</p>
+                <h3>Vijayawada Railway Bridge</h3>
+                <p class="pc-desc">Bridge construction support works.</p>
+              </div>
+              <a class="pc-link" href="#contact" aria-label="Discuss a project like Vijayawada Railway Bridge"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+            </div>
+          </li>
+          <li class="pc-card" aria-roledescription="slide" aria-label="9 of 9: Railway Infrastructure">
+            <img src="assets/img/projects/chhattisgarh.jpg?v=2" alt="Railway formation earthworks in Chhattisgarh" width="1400" height="788" loading="lazy" draggable="false">
+            <div class="pc-shade" aria-hidden="true"></div>
+            <div class="pc-body">
+              <div class="pc-text">
+                <p class="pc-cat"><span>Railways</span> Chhattisgarh · 2010 – 2020</p>
+                <h3>Railway Infrastructure</h3>
+                <p class="pc-desc">A decade of bulk excavation, precast concrete products and railway bridge construction.</p>
+              </div>
+              <a class="pc-link" href="#contact" aria-label="Discuss a project like Railway Infrastructure"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+            </div>
+          </li>
+        </ul>
+        <div class="pc-controls">
+          <button type="button" class="pc-btn pc-prev" aria-label="Previous project"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></button>
+          <div class="pc-bars" role="group" aria-label="Choose a project"></div>
+          <button type="button" class="pc-btn pc-next" aria-label="Next project"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+          <button type="button" class="pc-btn pc-play" aria-label="Pause automatic rotation"><svg class="i-pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5v14M15 5v14"/></svg><svg class="i-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5l11 7-11 7z"/></svg></button>
+        </div>
+        <p class="sr-only pc-live" aria-live="polite" aria-atomic="true"></p>
       </div>
     </section>
 
@@ -408,6 +440,6 @@
 
   <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
   <script src="assets/js/glass-reveal.js?v=2026112101"></script>
-  <script src="script.js?v=2026112101"></script>
+  <script src="script.js?v=2026112107"></script>
 </body>
 </html>
